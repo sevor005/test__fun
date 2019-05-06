@@ -1,0 +1,13 @@
+.list {
+  width: 500px;
+  padding: 30px;
+  border: rgb(218, 212, 212) solid 1px;
+  border-radius: 5px;
+}
+
+.delete {
+  float: right;
+  color: red;
+  cursor: pointer;
+  display: none;
+}

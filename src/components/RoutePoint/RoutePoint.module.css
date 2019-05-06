@@ -1,0 +1,32 @@
+.point {
+  font-size: 16px;
+  display: flex;
+  padding-top: 3px;
+  justify-content: space-between;
+  transition: background-color .1s;
+}
+
+.point:first-child {
+  padding-top: 0;
+}
+
+.point:hover {
+  background-color: #f0efef;
+}
+
+.editField {
+  width: 100%;
+  font-size: 15px;
+  outline: none;
+}
+
+.deleteImg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform .1s;
+}
+
+.deleteImg:hover {
+  transform: scaleY(1.2);
+}
