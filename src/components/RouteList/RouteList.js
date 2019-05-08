@@ -7,14 +7,15 @@ import RoutePointCreater from '../RoutePointCreater/RoutePointCreater';
 class RouteList extends Component {
 
   render() {
-    const {points, deletePoint, clearPointsList, createNewPoint, createNewGeoObject} = this.props;
+    const {points, deletePoint, clearPointsList, creatorPoints, addToMap} = this.props;
 
     return(
       <div className={styles.list}>
-        <RoutePointCreater createNewPoint={createNewPoint} createNewGeoObject={createNewGeoObject} />
+        <RoutePointCreater creatorPoints={creatorPoints} />
         <PointsList
           points={points}
           onDeletePoint={deletePoint}
+          addToMap={addToMap}
         />
 
         <RouteFooter

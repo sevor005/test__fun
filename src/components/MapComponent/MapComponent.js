@@ -13,26 +13,20 @@ class MapComponent extends Component {
     const {ymaps} = window;
     const myMap = new ymaps.Map('map', {
       center: [55.76, 37.64],
-      zoom: 5,
+      zoom: 4,
       controls: []
     });
-    return myMap;
-  }
 
-  addMarkersForMap = (myMap) => {
-    const {addToMap} = this.props;
-    addToMap(myMap);
+    this.props.getInstanceMap(myMap)
   }
 
   render() {
-    const instanceMap = this.init();
     return (
       <div>
         <Script
           url="https://api-maps.yandex.ru/2.1/?&lang=ru_RU"
           onLoad={this.handleScriptLoad}
         />
-        <button onClick={() => this.addMarkersForMap(instanceMap)}>Add marker</button>
         <div id='map' className={styles.containerMap}></div>
       </div>
     )

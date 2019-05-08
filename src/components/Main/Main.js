@@ -6,12 +6,11 @@ class Main extends React.Component {
 
   state = {
     points : [],
-    pointsGeoObjects: [],
-    isLoading: false,
+    pointsGeoObjects: []
   }
 
   addPointToState = point => this.setState( {points: [...this.state.points, point ]} );
-  addGeoObjectToState = pointGeoObject => this.setState( {pointsGeoObjects: [...this.state.pointsGeoObjects, pointGeoObject]}, () => console.log(this.state.pointsGeoObjects) );
+  addGeoObjectToState = geoObjects => this.setState( {pointsGeoObjects: [...this.state.pointsGeoObjects, geoObjects]} );
 
   clearPointsList = () => this.setState({ points: [], pointsGeoObjects: [] });
 
@@ -19,9 +18,6 @@ class Main extends React.Component {
     this.setState({
       points: this.state.points.filter((item) => {
         return item.id !== pointId;
-      }),
-      pointsGeoObjects: this.state.pointsGeoObjects.filter((geoObjects) => {
-        return geoObjects.id !== pointId;
       })
     })
   }
@@ -34,50 +30,51 @@ class Main extends React.Component {
 
   createNewPoint = event => {
     const id = this.getId();
-    if(event.key === 'Enter') {
+    const newPoint = {
+      title: event.currentTarget.value,
+      id,
+    };
 
-      if(event.currentTarget.value === '') return;
-
-      const newPoint = {
-        title: event.currentTarget.value,
-        id
-      };
-
-      this.addPointToState(newPoint)
-
-      event.currentTarget.value = ''
-    }
+    this.addPointToState(newPoint)
   }
 
   createNewGeoObject = (event) => {
     const {ymaps} = window;
+    const newGeoObject = new ymaps.GeoObject({
+      geometry: {
+        type: 'Point',
+        coordinates: [55.76, 37.64]
+      },
+      properties: {
+        iconContent: event.currentTarget.value,
+        balloonContent: event.currentTarget.value,
+      }
+    }, {
+      preset: 'islands#blackStretchyIcon',
+      draggable: true
+    });
+
+    this.addGeoObjectToState(newGeoObject);
+  }
+
+  creatorPoints = (event) => {
     if(event.key === 'Enter') {
       if(event.currentTarget.value === '') return;
 
-      const newGeoObject = new ymaps.GeoObject({
-        geometry: {
-          type: 'Point',
-          coordinates: [55.76, 37.64]
-        },
-        properties: {
-          balloonContent: event.currentTarget.value,
-          hintContent: event.currentTarget.value
-        }
-      }, {
-        preset: 'islands#blackStretchyIcon',
-        draggable: true
-      });
+      this.createNewPoint(event);
+      this.createNewGeoObject(event);
 
-      this.addGeoObjectToState(newGeoObject);
-
-      event.currentTarget.value = ''
+      event.currentTarget.value = '';
     }
   }
 
-  addToMap = (initMap) => {
+  addToMap = () => {
     const {pointsGeoObjects} = this.state;
-    pointsGeoObjects.map(marker => initMap.geoObjects.add(marker));
+    const myMap = this.getInstanceMap();
+    pointsGeoObjects.map(marker => myMap.geoObjects.add(marker));
   }
+
+  getInstanceMap = instanceMap => instanceMap;
 
   render() {
     return (
@@ -87,15 +84,13 @@ class Main extends React.Component {
             points={this.state.points}
             deletePoint={this.deletePoint}
             clearPointsList={this.clearPointsList}
-            createNewPoint={this.createNewPoint}
-            createNewGeoObject={this.createNewGeoObject}
+            creatorPoints={this.creatorPoints}
+            addToMap={this.addToMap}
           />
         </div>
         <div>
           <MapComponent
-            pointsGeoObjects={this.state.pointsGeoObjects}
-            addToMap={this.addToMap}
-            isLoading={this.state}
+            getInstanceMap={this.getInstanceMap}
           />
         </div>
       </div>

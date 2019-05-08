@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './RoutePointCreater.module.css';
 
 const RoutePointCreater = (props) => {
-  const {createNewGeoObject} = props;
+  const {creatorPoints} = props;
   return(
     <div>
-      <input onKeyPress={createNewGeoObject} className={styles.input} placeholder='enter the route...' />
+      <input onKeyPress={creatorPoints} className={styles.input} placeholder='enter the route...' />
     </div>
   )
 }
