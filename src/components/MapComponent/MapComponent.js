@@ -11,13 +11,14 @@ class MapComponent extends Component {
 
   init = () => {
     const {ymaps} = window;
+    const {loadMap} = this.props;
     const myMap = new ymaps.Map('map', {
       center: [55.76, 37.64],
       zoom: 4,
       controls: []
     });
 
-    this.props.getInstanceMap(myMap)
+    loadMap(myMap)
   }
 
   render() {

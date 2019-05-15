@@ -10,16 +10,27 @@ class Main extends React.Component {
   }
 
   addPointToState = point => this.setState( {points: [...this.state.points, point ]} );
-  addGeoObjectToState = geoObjects => this.setState( {pointsGeoObjects: [...this.state.pointsGeoObjects, geoObjects]} );
+  addGeoObjectToState = geoObjects => this.setState( {pointsGeoObjects: [...this.state.pointsGeoObjects, geoObjects]});
 
   clearPointsList = () => this.setState({ points: [], pointsGeoObjects: [] });
 
   deletePoint = pointId => {
+
     this.setState({
-      points: this.state.points.filter((item) => {
+      points: this.state.points.filter(item => {
         return item.id !== pointId;
+      }),
+      pointsGeoObjects: this.state.pointsGeoObjects.map(marker => {
+        if(marker.properties._data.id === pointId) {
+          this.deleteGeoObject(marker);
+        }
+        return marker;
       })
-    })
+    }, () => console.log(this.state.pointsGeoObjects))
+  }
+
+  deleteGeoObject = (marker) => {
+    this.myMap.geoObjects.remove(marker);
   }
 
   getId = () => {
@@ -29,10 +40,10 @@ class Main extends React.Component {
   }
 
   createNewPoint = event => {
-    const id = this.getId();
+    this.id = this.getId();
     const newPoint = {
       title: event.currentTarget.value,
-      id,
+      id: this.id,
     };
 
     this.addPointToState(newPoint)
@@ -48,6 +59,7 @@ class Main extends React.Component {
       properties: {
         iconContent: event.currentTarget.value,
         balloonContent: event.currentTarget.value,
+        id: this.id
       }
     }, {
       preset: 'islands#blackStretchyIcon',
@@ -68,13 +80,12 @@ class Main extends React.Component {
     }
   }
 
+  loadMap = myMap => this.myMap = myMap;
+
   addToMap = () => {
     const {pointsGeoObjects} = this.state;
-    const myMap = this.getInstanceMap();
-    pointsGeoObjects.map(marker => myMap.geoObjects.add(marker));
+    pointsGeoObjects.map(marker => this.myMap.geoObjects.add(marker));
   }
-
-  getInstanceMap = instanceMap => instanceMap;
 
   render() {
     return (
@@ -90,7 +101,7 @@ class Main extends React.Component {
         </div>
         <div>
           <MapComponent
-            getInstanceMap={this.getInstanceMap}
+            loadMap={this.loadMap}
           />
         </div>
       </div>
