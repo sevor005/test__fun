@@ -3,6 +3,7 @@ import styles from  './RouteList.module.css';
 import PointsList from '../PointsList/PointsList';
 import RouteFooter from '../RouteFooter/RouteFooter';
 import RoutePointCreater from '../RoutePointCreater/RoutePointCreater';
+import MarkerList from '../MarkerList/MarkerList';
 
 class RouteList extends Component {
 
@@ -15,8 +16,9 @@ class RouteList extends Component {
         <PointsList
           points={points}
           onDeletePoint={deletePoint}
-          addToMap={addToMap}
         />
+
+        <MarkerList addToMap={addToMap} />
 
         <RouteFooter
           pointsLength={points.length}

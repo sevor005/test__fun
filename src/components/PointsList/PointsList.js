@@ -4,7 +4,7 @@ import styles from './PointsList.module.css';
 
 const PointsList = (props) => {
 
-  const {points, addToMap} = props;
+  const {points} = props;
   return(
     <div className={styles.pointsList}>
       {points.map(point => {
@@ -15,7 +15,6 @@ const PointsList = (props) => {
           key={point.id}
           />
       })}
-      {addToMap()}
     </div>
   )
 }
