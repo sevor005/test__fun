@@ -12,26 +12,18 @@ class Main extends React.Component {
 
   clearPointsList = () => {
     const points = [];
-    const markers = this.deleteAllGeoObjects();
 
-    this.setState({ points, markers });
+    this.setState({ points }, this.deleteGeoObjects());
   };
 
   deletePoint = pointId => {
     const points = this.state.points.filter(point => point.id !== pointId);
 
-    this.setState({ points }, this.deleteAllGeoObjects());
+    this.setState({ points }, this.deleteGeoObjects());
   };
 
-  deleteAllGeoObjects = () => {
+  deleteGeoObjects = () => {
     this.myMap.geoObjects.removeAll();
-  };
-
-  deleteGeoObject = (markerId) => {
-    const {points} = this.state;
-    const point = points.filter(item => item.id === markerId);
-
-    return this.myMap.geoObjects.removeAll(point);
   };
 
   getId = () => {
@@ -76,6 +68,7 @@ class Main extends React.Component {
   creatorPoints = (event) => {
     if(event.key === 'Enter') {
       if(event.currentTarget.value === '') return;
+
       this.createNewPoint(event);
 
       event.currentTarget.value = '';

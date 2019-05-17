@@ -14,7 +14,7 @@ class MapComponent extends Component {
     const {loadMap} = this.props;
     const myMap = new ymaps.Map('map', {
       center: [55.76, 37.64],
-      zoom: 4,
+      zoom: 5,
       controls: []
     });
 
