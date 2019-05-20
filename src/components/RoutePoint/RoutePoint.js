@@ -1,57 +1,22 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styles from './RoutePoint.module.css';
 
-const pathImgDelete = 'https://www.clipartmax.com/png/middle/209-2095674_trash-bin-comments-waste.png';
+const RoutePoint = (props) => {
 
-class RoutePoint extends Component {
+  const deletePoint = () => {
+    const {onDeletePoint, pointId} = props;
+    onDeletePoint(pointId);
+  };
 
-  state = {
-    editMode: false,
-    title: this.props.point.title
-  }
+  const pathImgDelete = 'https://www.clipartmax.com/png/middle/209-2095674_trash-bin-comments-waste.png';
 
-  goToEditMode = () => this.setState({ editMode: true });
-
-  changeTitle = event => this.setState({ title: event.currentTarget.value });
-
-  saveTitlePoint = event => {
-    const {title} = this.props.point
-    const newTitle = event.currentTarget.value;
-
-    if(newTitle !== '') {
-      this.setState({editMode: false, title: newTitle})
-    } else {
-      this.setState({editMode: false, title})
-    }
-  }
-
-  deletePoint = () => {
-    const {deleteCallback, point} = this.props;
-    deleteCallback(point.id)
-  }
-
-  render() {
-    const {title} = this.state
-    let displayElement = '';
-
-    if(this.state.editMode) {
-      displayElement = <input
-                          value={title}
-                          onChange={this.changeTitle}
-                          onBlur={this.saveTitlePoint}
-                          className={styles.editField}
-                        />
-    } else {
-      displayElement = <span onDoubleClick={this.goToEditMode}>{title}</span>
-    }
-
-    return(
-      <div className={styles.point}>
-        {displayElement}
-        <img src={pathImgDelete} alt='X' className={styles.deleteImg} onClick={this.deletePoint} />
-      </div>
-    )
-  }
+  return (
+    <div className={styles.point}>
+      <span>{props.pointTitle}</span>
+      <img src={pathImgDelete} alt='X' className={styles.deleteImg} onClick={deletePoint} />
+    </div>
+  )
 }
 
 export default RoutePoint;
+
