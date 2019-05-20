@@ -1,26 +1,61 @@
 import React from 'react';
 import RoutePoint from './../RoutePoint/RoutePoint';
 import styles from './PointsList.module.css';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const PointsList = (props) => {
 
-  const {points} = props;
+  const updatePoints = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    const { destination } = result;
+    const {updateListPoints} = props;
+
+    if(!destination) {return};
+
+    const points = updatePoints(props.points, result.source.index, result.destination.index);
+
+    updateListPoints(points)
+  };
+
   return(
-    <DragDropContext>
-      <div className={styles.pointsList}>
-        {points.map(point => {
-          const {onDeletePoint} = props;
-          return <RoutePoint
-            pointId={point.id}
-            pointTitle={point.title}
-            onDeletePoint={onDeletePoint}
-            key={point.id}
-            />
-        })}
-      </div>
-    </DragDropContext>
-  )
-}
+    <div className={styles.pointsList}>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId='droppable'>
+          {providerList => (
+            <div ref={providerList.innerRef}>
+              {props.points.map((point, index) => (
+                <Draggable key={point.id} draggableId={point.id} index={index}>
+                  {providerPoint => (
+                    <div
+                      ref={providerPoint.innerRef}
+                      {...providerPoint.draggableProps}
+                      {...providerPoint.dragHandleProps}
+                    >
+                      <RoutePoint
+                        pointId={point.id}
+                        pointTitle={point.title}
+                        onDeletePoint={props.onDeletePoint}
+                        key={point.id}
+                      />
+                    </div>
+
+                  )}
+                </Draggable>
+              ))}
+              {providerList.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </div>
+  );
+};
 
 export default PointsList;

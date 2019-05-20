@@ -107,6 +107,16 @@ class Main extends React.Component {
     this.myMap.geoObjects.add(polyline);
   };
 
+  updateListPoints = (newListPoints) => {
+    const points = newListPoints.map(point => ({
+      title: point.title,
+      id: point.id,
+      marker: point.marker,
+    }));
+
+    this.setState({ points }, this.updatePolyline)
+  }
+
   render() {
     return (
       <div>
@@ -117,6 +127,7 @@ class Main extends React.Component {
             clearPointsList={this.clearPointsList}
             creatorPoints={this.creatorPoints}
             addToMap={this.addToMap}
+            updateListPoints={this.updateListPoints}
           />
         </div>
         <div>

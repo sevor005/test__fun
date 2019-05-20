@@ -6,7 +6,7 @@ import RoutePointCreater from '../RoutePointCreater/RoutePointCreater';
 import MarkerList from '../MarkerList/MarkerList';
 
 const RouteList = (props) => {
-  const {points, deletePoint, clearPointsList, creatorPoints, addToMap} = props;
+  const {points, deletePoint, clearPointsList, creatorPoints, addToMap, updateListPoints} = props;
 
   return(
     <div className={styles.list}>
@@ -14,6 +14,7 @@ const RouteList = (props) => {
       <PointsList
         points={points}
         onDeletePoint={deletePoint}
+        updateListPoints={updateListPoints}
       />
 
       <MarkerList addToMap={addToMap} />
