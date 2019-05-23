@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from  './RouteList.module.css';
 import PointsList from '../PointsList/PointsList';
 import RouteFooter from '../RouteFooter/RouteFooter';
@@ -26,5 +27,18 @@ const RouteList = (props) => {
     </div>
   )
 }
+
+RouteList.propTypes = {
+  points: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    id: PropTypes.number,
+    marker: PropTypes.object
+  })),
+  deletePoint: PropTypes.func,
+  clearPointsList: PropTypes.func,
+  creatorPoints: PropTypes.func,
+  addToMap: PropTypes.func,
+  updateListPoints: PropTypes.func
+};
 
 export default RouteList;

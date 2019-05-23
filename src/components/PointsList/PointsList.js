@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RoutePoint from './../RoutePoint/RoutePoint';
 import styles from './PointsList.module.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -14,7 +15,7 @@ const PointsList = (props) => {
   };
 
   const onDragEnd = (result) => {
-    const { destination } = result;
+    const {destination} = result;
     const {updateListPoints} = props;
 
     if(!destination) {return};
@@ -45,7 +46,6 @@ const PointsList = (props) => {
                         key={point.id}
                       />
                     </div>
-
                   )}
                 </Draggable>
               ))}
@@ -56,6 +56,16 @@ const PointsList = (props) => {
       </DragDropContext>
     </div>
   );
+};
+
+PointsList.propTypes = {
+  points: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    id: PropTypes.number,
+    marker: PropTypes.object
+  })),
+  onDeletePoint: PropTypes.func,
+  updateListPoints: PropTypes.func
 };
 
 export default PointsList;

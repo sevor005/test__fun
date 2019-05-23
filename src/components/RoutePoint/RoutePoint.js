@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './RoutePoint.module.css';
 
 const RoutePoint = (props) => {
@@ -16,7 +17,13 @@ const RoutePoint = (props) => {
       <img src={pathImgDelete} alt='X' className={styles.deleteImg} onClick={deletePoint} />
     </div>
   )
-}
+};
+
+RoutePoint.propTypes = {
+  onDeletePoint: PropTypes.func,
+  pointId: PropTypes.number,
+  pointTitle: PropTypes.string
+};
 
 export default RoutePoint;
 

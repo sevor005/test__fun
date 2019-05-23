@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Script from 'react-load-script';
 import styles from './MapComponent.module.css';
 
-class MapComponent extends Component {
+const MapComponent = (props) => {
 
-  handleScriptLoad = () => {
+  const handleScriptLoad = () => {
     const {ymaps} = window;
-    ymaps.ready(this.init);
+    ymaps.ready(init);
   }
 
-  init = () => {
+  const init = () => {
     const {ymaps} = window;
-    const {loadMap} = this.props;
+    const {loadMap} = props;
     const myMap = new ymaps.Map('map', {
       center: [55.76, 37.64],
       zoom: 5,
@@ -21,17 +22,19 @@ class MapComponent extends Component {
     loadMap(myMap)
   }
 
-  render() {
-    return (
-      <div>
-        <Script
-          url="https://api-maps.yandex.ru/2.1/?&lang=ru_RU"
-          onLoad={this.handleScriptLoad}
-        />
-        <div id='map' className={styles.containerMap}></div>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Script
+        url="https://api-maps.yandex.ru/2.1/?&lang=ru_RU"
+        onLoad={handleScriptLoad}
+      />
+      <div id='map' className={styles.containerMap}></div>
+    </div>
+  )
+};
+
+MapComponent.propTypes = {
+  loadMap: PropTypes.func
 }
 
 export default MapComponent;

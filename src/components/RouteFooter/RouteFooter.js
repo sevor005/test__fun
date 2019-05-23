@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from  './RouteFooter.module.css';
 
 const RouteFooter = (props) => {
@@ -22,6 +23,11 @@ const RouteFooter = (props) => {
       </div>
     </div>
   )
-}
+};
+
+RouteFooter.propTypes = {
+  pointsLength: PropTypes.number,
+  clearPointsList: PropTypes.func
+};
 
 export default RouteFooter;
