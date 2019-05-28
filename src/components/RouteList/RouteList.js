@@ -14,7 +14,7 @@ const RouteList = (props) => {
       <RoutePointCreater creatorPoints={creatorPoints} />
       <PointsList
         points={points}
-        onDeletePoint={deletePoint}
+        deletePoint={deletePoint}
         updateListPoints={updateListPoints}
       />
 

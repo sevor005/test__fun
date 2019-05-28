@@ -5,8 +5,8 @@ import styles from './RoutePoint.module.css';
 const RoutePoint = (props) => {
 
   const deletePoint = () => {
-    const {onDeletePoint, pointId} = props;
-    onDeletePoint(pointId);
+    const {deletePoint, pointId} = props;
+    deletePoint(pointId);
   };
 
   const pathImgDelete = 'https://www.clipartmax.com/png/middle/209-2095674_trash-bin-comments-waste.png';

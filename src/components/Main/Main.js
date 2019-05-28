@@ -1,6 +1,7 @@
 import React from 'react';
 import RouteList from '../RouteList/RouteList';
 import MapComponent from './../MapComponent/MapComponent';
+import styles from './Main.module.css';
 
 class Main extends React.Component {
 
@@ -119,7 +120,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.main}>
         <div>
           <RouteList
             points={this.state.points}

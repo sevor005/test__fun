@@ -18,7 +18,7 @@ const PointsList = (props) => {
     const {destination} = result;
     const {updateListPoints} = props;
 
-    if(!destination) {return};
+    if(!destination) return;
 
     const points = updatePoints(props.points, result.source.index, result.destination.index);
 
@@ -42,7 +42,7 @@ const PointsList = (props) => {
                       <RoutePoint
                         pointId={point.id}
                         pointTitle={point.title}
-                        onDeletePoint={props.onDeletePoint}
+                        deletePoint={props.deletePoint}
                         key={point.id}
                       />
                     </div>
