@@ -1,9 +1,14 @@
+/* .wrapperCreater {
+  display: flex;
+  justify-content: space-between;
+}; */
+
 .input {
+  height: 25px;
+  width: 300px;
   border: 1px solid #cecece;
   border-radius: 6px;
   outline: none;
   padding: 2px 5px;
-  height: 25px;
-  width: 300px;
   font-size: 15px;
-}
+};

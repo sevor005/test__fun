@@ -9,7 +9,7 @@ class Main extends React.Component {
     points : []
   };
 
-  addPointToState = point => this.setState( {points: [...this.state.points, point ]} );
+  addPointToState = (point) => this.setState( {points: [...this.state.points, point ]}, () => console.log(this.state.points) );
 
   clearPointsList = () => {
     const points = [];
@@ -17,7 +17,7 @@ class Main extends React.Component {
     this.setState({ points }, this.deleteGeoObjects());
   };
 
-  deletePoint = pointId => {
+  deletePoint = (pointId) => {
     const points = this.state.points.filter(point => point.id !== pointId);
 
     this.setState({ points }, this.deleteGeoObjects());
@@ -33,7 +33,7 @@ class Main extends React.Component {
     return biggest + 1;
   };
 
-  createNewPoint = event => {
+  createNewPoint = (event) => {
     const id = this.getId();
     const newPoint = {
       title: event.currentTarget.value,
@@ -66,7 +66,7 @@ class Main extends React.Component {
     return newGeoObject;
   };
 
-  creatorPoints = (event) => {
+  creatorPointsToEnter = (event) => {
     if(event.key === 'Enter') {
       if(event.currentTarget.value === '') return;
 
@@ -75,6 +75,12 @@ class Main extends React.Component {
       event.currentTarget.value = '';
     };
   };
+
+  creatorPointsToClick = (event) => {
+    // if(event.currentTarget.value === '') return;
+    this.createNewPoint(event);
+    event.currentTarget.value = '';
+  }
 
   loadMap = myMap => this.myMap = myMap;
 
@@ -126,7 +132,8 @@ class Main extends React.Component {
             points={this.state.points}
             deletePoint={this.deletePoint}
             clearPointsList={this.clearPointsList}
-            creatorPoints={this.creatorPoints}
+            creatorPointsToEnter={this.creatorPointsToEnter}
+            creatorPointsToClick={this.creatorPointsToClick}
             addToMap={this.addToMap}
             updateListPoints={this.updateListPoints}
           />

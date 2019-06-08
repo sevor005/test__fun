@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './RoutePointCreater.module.css';
 
 const RoutePointCreater = (props) => {
-  const {creatorPoints} = props;
+  const {creatorPointsToEnter, creatorPointsToClick} = props;
   return(
-    <div>
-      <input onKeyPress={creatorPoints} className={styles.input} placeholder='enter the route...' />
+    <div className={styles.wrapperCreater}>
+      <input onKeyPress={creatorPointsToEnter} className={styles.input} placeholder='enter the route...' />
+      <button onClick={creatorPointsToClick}>Add item</button>
     </div>
   )
 }
