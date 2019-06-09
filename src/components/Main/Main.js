@@ -6,7 +6,8 @@ import styles from './Main.module.css';
 class Main extends React.Component {
 
   state = {
-    points : []
+    points : [],
+    inputValue: ''
   };
 
   addPointToState = (point) => this.setState( {points: [...this.state.points, point ]}, () => console.log(this.state.points) );
@@ -33,10 +34,17 @@ class Main extends React.Component {
     return biggest + 1;
   };
 
+  changeInputValue = (event) => {
+    this.setState({inputValue: event.currentTarget.value})
+  };
+
+  clearInputValue = () => this.setState({ inputValue: '' });
+
   createNewPoint = (event) => {
+    const {inputValue} = this.state;
     const id = this.getId();
     const newPoint = {
-      title: event.currentTarget.value,
+      title: inputValue,
       id,
       marker: this.createNewGeoObject(event),
     };
@@ -44,7 +52,8 @@ class Main extends React.Component {
     this.addPointToState(newPoint);
   };
 
-  createNewGeoObject = (event) => {
+  createNewGeoObject = () => {
+    const {inputValue} = this.state;
     const {ymaps} = window;
     const centerMap = this.myMap.getCenter();
     const newGeoObject = new ymaps.GeoObject({
@@ -53,8 +62,8 @@ class Main extends React.Component {
         coordinates: centerMap
       },
       properties: {
-        iconContent: event.currentTarget.value,
-        balloonContent: event.currentTarget.value
+        iconContent: inputValue,
+        balloonContent: inputValue
       }
     }, {
       preset: 'islands#blackStretchyIcon',
@@ -67,19 +76,23 @@ class Main extends React.Component {
   };
 
   creatorPointsToEnter = (event) => {
+    const {inputValue} = this.state;
+
     if(event.key === 'Enter') {
-      if(event.currentTarget.value === '') return;
+      if(inputValue === '') return;
 
       this.createNewPoint(event);
-
-      event.currentTarget.value = '';
+      this.clearInputValue();
     };
   };
 
-  creatorPointsToClick = (event) => {
-    // if(event.currentTarget.value === '') return;
-    this.createNewPoint(event);
-    event.currentTarget.value = '';
+  creatorPointsToClick = () => {
+    const {inputValue} = this.state;
+
+    if(inputValue === '') return;
+
+    this.createNewPoint(inputValue);
+    this.clearInputValue();
   }
 
   loadMap = myMap => this.myMap = myMap;
@@ -136,6 +149,8 @@ class Main extends React.Component {
             creatorPointsToClick={this.creatorPointsToClick}
             addToMap={this.addToMap}
             updateListPoints={this.updateListPoints}
+            changeInputValue={this.changeInputValue}
+            inputValue={this.state.inputValue}
           />
         </div>
         <div>

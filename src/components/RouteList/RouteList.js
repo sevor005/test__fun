@@ -7,11 +7,25 @@ import RoutePointCreater from '../RoutePointCreater/RoutePointCreater';
 import MarkerList from '../MarkerList/MarkerList';
 
 const RouteList = (props) => {
-  const {points, deletePoint, clearPointsList, creatorPointsToEnter, addToMap, updateListPoints, creatorPointsToClick} = props;
+  const {
+    points,
+    deletePoint,
+    clearPointsList,
+    creatorPointsToEnter,
+    addToMap,
+    updateListPoints,
+    inputValue,
+    creatorPointsToClick,
+    changeInputValue} = props;
 
   return(
     <div className={styles.list}>
-      <RoutePointCreater creatorPointsToEnter={creatorPointsToEnter} creatorPointsToClick={creatorPointsToClick} />
+      <RoutePointCreater
+        creatorPointsToEnter={creatorPointsToEnter}
+        creatorPointsToClick={creatorPointsToClick}
+        changeInputValue={changeInputValue}
+        inputValue={inputValue}
+      />
       <PointsList
         points={points}
         deletePoint={deletePoint}
@@ -36,9 +50,12 @@ RouteList.propTypes = {
   })),
   deletePoint: PropTypes.func,
   clearPointsList: PropTypes.func,
+  pointsLength: PropTypes.number,
   creatorPoints: PropTypes.func,
   addToMap: PropTypes.func,
-  updateListPoints: PropTypes.func
+  updateListPoints: PropTypes.func,
+  changeInputValue: PropTypes.func,
+  inputValue: PropTypes.string
 };
 
 export default RouteList;
