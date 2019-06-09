@@ -81,7 +81,7 @@ class Main extends React.Component {
     if(event.key === 'Enter') {
       if(inputValue === '') return;
 
-      this.createNewPoint(event);
+      this.createNewPoint();
       this.clearInputValue();
     };
   };
@@ -91,7 +91,7 @@ class Main extends React.Component {
 
     if(inputValue === '') return;
 
-    this.createNewPoint(inputValue);
+    this.createNewPoint();
     this.clearInputValue();
   }
 
