@@ -29,7 +29,7 @@ class Main extends React.Component {
   };
 
   getId = () => {
-    const {points} = this.state;
+    const { points } = this.state;
     const biggest = points.reduce((acc, el) => Math.max(acc, el.id), 0);
     return biggest + 1;
   };

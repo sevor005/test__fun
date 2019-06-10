@@ -1,16 +1,4 @@
 import puppeteer from "puppeteer";
-// import React from 'react';
-// import RouteList from './RouteList';
-// import { shallow, mount } from 'enzyme';
-// import RoutePointCreater from '../RoutePointCreater/RoutePointCreater.js';
-// import PointsList from '../PointsList/PointsList';
-// import MarkerList from '../MarkerList/MarkerList';
-// import RouteFooter from '../RouteFooter/RouteFooter';
-// import { configure } from 'enzyme';
-// import Adapter from 'enzyme-adapter-react-16';
-// import RoutePoint from "../RoutePoint/RoutePoint";
-
-// configure({ adapter: new Adapter() });
 
 let page;
 let browser;
@@ -18,6 +6,13 @@ const width = 1920;
 const height = 1080;
 const urlPage = 'http://localhost:3000';
 const timeout = 14000;
+
+const selectorMain = '[class*="main"]';
+const selectorInput = '[class*="input"]';
+const selectorPoint = '[class*="point"]';
+const selectorBtnAddPoint = '[class*="button"]';
+const selectorBtnDeletePoint = '[class*="deleteImg"]';
+const selectorBtnAllClear = '[class*="clearCompleted"]';
 
 beforeAll(async () => {
   jest.setTimeout(20000);
@@ -42,36 +37,68 @@ beforeAll(async () => {
 describe('Main', () => {
 
   it('компонент Main присутствует на странице', async () => {
-    const selector = '[class*="main"]';
-    await page.waitForSelector(selector);
+    await page.waitForSelector(selectorMain);
   }, timeout);
 
   it('добавление элемента в список работает', async () => {
-    const selectorInput = '[class*="input"]';
-    const selectorPoint = '[class*="point"]';
-
-    await page.type(selectorInput, 'Marker 1');
+    await page.type(selectorInput, 'Point 1');
     await page.keyboard.press('Enter');
     await page.waitForSelector(selectorPoint);
 
-    await page.type(selectorInput, 'Marker 2');
+    await page.type(selectorInput, 'Point 2');
+    await page.click(selectorBtnAddPoint);
+    await page.waitForSelector(selectorPoint);
+  }, timeout);
+
+  it('удаление из списка работает', async () => {
+    await page.click(selectorBtnDeletePoint);
+
+    const pointTitle = await page.$eval(selectorPoint, el => el.textContent);
+    expect(pointTitle).toEqual('Point 2');
+  }, timeout);
+
+  it('Drag-and-Drop списка работает', async () => {
+    await page.click(selectorBtnDeletePoint);
+
+    await page.type(selectorInput, 'Point 1');
     await page.keyboard.press('Enter');
     await page.waitForSelector(selectorPoint);
 
-    await page.type(selectorInput, 'Marker 3');
+    await page.type(selectorInput, 'Point 2');
     await page.keyboard.press('Enter');
     await page.waitForSelector(selectorPoint);
+
+    const ele1 = await page.$(selectorPoint);
+    const box1 = await ele1.boundingBox();
+    const ele2 = await page.$(selectorPoint);
+    const box2 = await ele2.boundingBox();
+    await page.mouse.move((parseInt(box1.x) + 5), (parseInt(box1.y) + 10));
+    await page.mouse.down();
+    await page.mouse.move(box2.x + 5, box2.y + box1.height, {steps: 10});
+    await page.mouse.up();
+    await page.click(selectorBtnDeletePoint);
+
+    const topPointTitle = await page.$eval(selectorPoint, el => el.textContent);
+
+    expect(topPointTitle).toEqual('Point 2');
+  }, timeout);
+
+  it('удаление всех элементов работает', async () => {
+    await page.type(selectorInput, 'Point 1');
+    await page.click(selectorBtnAddPoint);
+    await page.waitForSelector(selectorPoint);
+
+    await page.type(selectorInput, 'Point 3');
+    await page.click(selectorBtnAddPoint);
+    await page.waitForSelector(selectorPoint);
+
+    await page.click(selectorBtnAllClear);
+    const pointsLength = await page.$$eval(selectorPoint, el => el.length);
+
+    expect(pointsLength).toEqual(0);
   });
 
-  // it('удаление из списка работает', async () => {
-
-  // });
-
-  // it('Drag-and-Drop списка работает', async () => {
-
-  // });
-
-}, timeout);
+});
 
 afterAll(() => {
   browser.close();

@@ -15,8 +15,8 @@ const PointsList = (props) => {
   };
 
   const onDragEnd = (result) => {
-    const {destination} = result;
-    const {updateListPoints} = props;
+    const { destination } = result;
+    const { updateListPoints } = props;
 
     if(!destination) return;
 
