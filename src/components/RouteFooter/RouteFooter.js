@@ -16,8 +16,9 @@ const RouteFooter = (props) => {
 
       <div className={styles.buttons}>
         <button
-          className={styles.clearCompleted}
-          onClick={clearPointsList}>
+          className={pointsLength === 0 ? styles.clearCompletedDisabled: styles.clearCompleted}
+          onClick={clearPointsList}
+        >
           Clear list
         </button>
       </div>

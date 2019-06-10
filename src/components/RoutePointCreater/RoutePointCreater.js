@@ -5,7 +5,7 @@ import styles from './RoutePointCreater.module.css';
 const RoutePointCreater = (props) => {
   const {creatorPointsToEnter, creatorPointsToClick, changeInputValue, inputValue} = props;
   return(
-    <div>
+    <div className={styles.wrapper}>
       <input
         className={styles.input}
         onKeyPress={creatorPointsToEnter}
@@ -15,10 +15,10 @@ const RoutePointCreater = (props) => {
         placeholder='enter the route...'
       />
       <button
-        className={styles.button}
+        className={inputValue === '' ? styles.buttonDisabled : styles.button}
         onClick={creatorPointsToClick}
       >
-        Добавить
+        Add Point
       </button>
     </div>
   )
