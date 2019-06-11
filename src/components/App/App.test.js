@@ -13,7 +13,6 @@ const selectorPoint = '[class*="point"]';
 const selectorBtnAddPoint = '[class*="button"]';
 const selectorBtnDeletePoint = '[class*="deleteImg"]';
 const selectorBtnAllClear = '[class*="clearCompleted"]';
-const selectorPointTitle = '[class*="pointTitle"]';
 
 beforeAll(async () => {
   jest.setTimeout(20000);
@@ -79,9 +78,9 @@ describe('Main', () => {
     await page.mouse.up();
     await page.click(selectorBtnDeletePoint);
 
-    const topPointTitle = await page.$eval(selectorPoint, el => el.textContent);
+    const pointTitle = await page.$eval(selectorPoint, el => el.textContent);
 
-    expect(topPointTitle).toEqual('Point 2');
+    expect(pointTitle).toEqual('Point 2');
   }, timeout);
 
   it('удаление всех элементов работает', async () => {

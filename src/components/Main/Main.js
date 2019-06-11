@@ -10,7 +10,7 @@ class Main extends React.Component {
     inputValue: ''
   };
 
-  addPointToState = (point) => this.setState( {points: [...this.state.points, point ]}, () => console.log(this.state.points) );
+  addPointToState = (point) => this.setState( {points: [...this.state.points, point ]} );
 
   clearPointsList = () => {
     const points = [];
