@@ -15,12 +15,15 @@ class Main extends React.Component {
   clearPointsList = () => {
     const points = [];
 
-    this.setState({ points }, this.deleteGeoObjects());
+    this.setState({ points });
+    this.deleteGeoObjects();
   };
 
   deletePoint = (pointId) => {
     const points = this.state.points.filter(point => point.id !== pointId);
-    this.setState({ points }, this.deleteGeoObjects());
+
+    this.setState({ points }, this.updatePolyline);
+    this.deleteGeoObjects();
   };
 
   deleteGeoObjects = () => {
@@ -94,7 +97,7 @@ class Main extends React.Component {
     this.clearInputValue();
   }
 
-  loadMap = myMap => this.myMap = myMap;
+  loadMap = (myMap) => this.myMap = myMap;
 
   addToMap = () => {
     const {points} = this.state;
