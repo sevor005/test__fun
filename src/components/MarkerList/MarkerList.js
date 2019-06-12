@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const MarkerList = (props) => {
-  const {addToMap} = props;
+  const renderGeoMarker = () => {
+    const { myMap, points } = props;
 
-  return <div> {addToMap()} </div>
+    points.map(geo => myMap.geoObjects.add(geo.marker));
+  }
+
+  return <div>{ renderGeoMarker() }</div>
 };
 
 MarkerList.propTypes = {
-  addToMap: PropTypes.func
+  myMap: PropTypes.object,
+  points: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    id: PropTypes.number,
+    marker: PropTypes.object
+  }))
 };
 
 export default MarkerList;

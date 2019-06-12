@@ -12,7 +12,7 @@ const RouteList = (props) => {
     deletePoint,
     clearPointsList,
     creatorPointsToEnter,
-    addToMap,
+    myMap,
     updateListPoints,
     inputValue,
     creatorPointsToClick,
@@ -32,7 +32,10 @@ const RouteList = (props) => {
         updateListPoints={updateListPoints}
       />
 
-      <MarkerList addToMap={addToMap} />
+      <MarkerList
+        myMap={myMap}
+        points={points}
+      />
 
       <RouteFooter
         pointsLength={points.length}

@@ -99,11 +99,6 @@ class Main extends React.Component {
 
   loadMap = (myMap) => this.myMap = myMap;
 
-  addToMap = () => {
-    const {points} = this.state;
-    points.map(geo => this.myMap.geoObjects.add(geo.marker));
-  };
-
   createPolyline = () => {
     const { ymaps } = window;
     const { points } = this.state;
@@ -149,10 +144,10 @@ class Main extends React.Component {
             clearPointsList={this.clearPointsList}
             creatorPointsToEnter={this.creatorPointsToEnter}
             creatorPointsToClick={this.creatorPointsToClick}
-            addToMap={this.addToMap}
             updateListPoints={this.updateListPoints}
             changeInputValue={this.changeInputValue}
             inputValue={this.state.inputValue}
+            myMap={this.myMap}
           />
         </div>
         <div>

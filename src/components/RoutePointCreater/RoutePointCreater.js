@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './RoutePointCreater.module.css';
 
 const RoutePointCreater = (props) => {
-  const {creatorPointsToEnter, creatorPointsToClick, changeInputValue, inputValue} = props;
+  const { creatorPointsToEnter, creatorPointsToClick, changeInputValue, inputValue } = props;
   return(
     <div className={styles.wrapper}>
       <input
