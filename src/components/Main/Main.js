@@ -10,7 +10,7 @@ class Main extends React.Component {
     inputValue: ''
   };
 
-  addPointToState = (point) => this.setState( {points: [...this.state.points, point ]} );
+  addPointToState = (point) => this.setState( {points: [...this.state.points, point ]}, this.updatePolyline );
 
   clearPointsList = () => {
     const points = [];
@@ -20,7 +20,6 @@ class Main extends React.Component {
 
   deletePoint = (pointId) => {
     const points = this.state.points.filter(point => point.id !== pointId);
-
     this.setState({ points }, this.deleteGeoObjects());
   };
 
@@ -103,8 +102,8 @@ class Main extends React.Component {
   };
 
   createPolyline = () => {
-    const {ymaps} = window;
-    const {points} = this.state;
+    const { ymaps } = window;
+    const { points } = this.state;
     const coordinates = points.map(geo => geo.marker.geometry.getCoordinates());
 
     this.polyline = new ymaps.Polyline(coordinates, {}, {strokeColor: '#999', strokeWidth: 3});
@@ -113,7 +112,7 @@ class Main extends React.Component {
   updatePolyline = () => {
     if(this.polyline) {
       this.deletePolyline(this.polyline);
-    }
+    };
 
     this.createPolyline();
     this.addPolylineForMap(this.polyline);
