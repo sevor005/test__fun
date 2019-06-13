@@ -14,6 +14,8 @@ const selectorBtnAddPoint = '[class*="button"]';
 const selectorBtnDeletePoint = '[class*="deleteImg"]';
 const selectorBtnAllClear = '[class*="clearCompleted"]';
 
+const selectorListPoints = '[class*="list"]';
+
 beforeAll(async () => {
   jest.setTimeout(20000);
   browser = await puppeteer.launch({
@@ -76,11 +78,11 @@ describe('Main', () => {
     await page.mouse.down();
     await page.mouse.move(box2.x + 5, box2.y + box1.height, {steps: 10});
     await page.mouse.up();
-    await page.click(selectorBtnDeletePoint);
+    await page.focus(selectorPoint+':first-child');
 
-    const pointTitle = await page.$eval(selectorPoint, el => el.textContent);
+    const firstPoint = await page.$eval(selectorPoint+':first-child', el => el.textContent);
 
-    expect(pointTitle).toEqual('Point 2');
+    expect(firstPoint).toEqual('Point 2');
   }, timeout);
 
   it('удаление всех элементов работает', async () => {
