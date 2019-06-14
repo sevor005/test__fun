@@ -14,8 +14,6 @@ const selectorBtnAddPoint = '[class*="button"]';
 const selectorBtnDeletePoint = '[class*="deleteImg"]';
 const selectorBtnAllClear = '[class*="clearCompleted"]';
 
-const selectorListPoints = '[class*="list"]';
-
 beforeAll(async () => {
   jest.setTimeout(20000);
   browser = await puppeteer.launch({
